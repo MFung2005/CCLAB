@@ -57,14 +57,20 @@ body {
     padding-bottom: 40px;
 }
 
-/* Sketch placeholder */
-#p5-canvas-container img{
+canvas {
+    display: block;
+    margin: auto;
+    margin-top: -20px;
+}
+
+#p5-canvas-container {
+    margin: auto;
     width: 800px;
+    
+    margin-top: 20px; 
 }
 
 
-
-/* home button */
 #home a {
     position: fixed;
     right: 50px;

@@ -26,10 +26,9 @@ let rotationCoral;
 let rotation = 0;
 
 function setup() {
-  createCanvas(800, 500);
-  canvas.id("p5-canvas");
-  canvas.parent("p5-canvas-container")
-  colorMode(RGB, 255);
+createCanvas(800, 500);
+// canvas.id("p5-canvas-container");
+  
   fishSquad = random(60, 700);
   fishSquadY = random(60, height - 60);
   fishSquadMovement = fishSquad;
