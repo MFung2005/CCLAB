@@ -71,16 +71,16 @@ class AmongUs {
       rotate(3*PI/2);
     //palm
     fill(159,0,0);
-    ellipse(this.x-550,this.y - 90,60/2,50/2);
+    ellipse(320-550,330 - 90,60/2,50/2);
     //fingers
     fill(150,0,0);
-    ellipse(this.x-545,this.y-100,15/2,20/2);
-    ellipse(this.x-553,this.y-100,15/2,20/2);
-    ellipse(this.x-560,this.y-100,15/2,20/2);
+    ellipse(320-545,330-100,15/2,20/2);
+    ellipse(320-553,330-100,15/2,20/2);
+    ellipse(320-560,330-100,15/2,20/2);
     //pointer finger
-    ellipse(this.x-540,this.y-100,15/2,30/2);
+    ellipse(320-540,330-100,15/2,30/2);
     //thumb
-    ellipse(this.x-535,this.y-90,30/2,15/2);
+    ellipse(320-535,330-90,30/2,15/2);
       pop();
     }
   }
