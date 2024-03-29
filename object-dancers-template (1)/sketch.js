@@ -46,7 +46,7 @@ class AmongUs {
       //hand
       push();
       rotate(PI / 4);
-      translate(320 + 200, -20);
+      translate(320 + 400, -20);
       //palm
       fill(140, 0, 0);
       ellipse(10, 10, 60 / 2, 50 / 2);
