@@ -46,7 +46,7 @@ class AmongUs {
       //hand
       push();
       rotate(PI / 4);
-      translate(this.x + 200, -20);
+      translate(320 + 200, -20);
       //palm
       fill(140, 0, 0);
       ellipse(10, 10, 60 / 2, 50 / 2);
@@ -114,8 +114,8 @@ class AmongUs {
     //arm
     stroke(159, 0, 0);
     strokeWeight(12);
-    line(this.x-325, this.y -325, this.x - 345, this.y-310);
-    line(this.x -325, this.y - 300, this.x - 345, this.y-310);
+    line(320-325, 330 -325, 320 - 345, 330-310);
+    line(320 -325, 330 - 300, 320 - 345, 330-310);
 
 
 
