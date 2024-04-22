@@ -54,10 +54,7 @@ class Particle {
     }
     if (flicker == true){
       push();
-      
       translate(this.x, this.y);
-      
-      
       fill(random(0,255));
       rect(0, 0, this.dia, this.dia);
       pop();

@@ -1,0 +1,82 @@
+body{
+    background-color:gray;
+    font-size: 3em;
+    margin: 0;
+    padding: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.red{
+    background-color: crimson;
+    /* margin:50px 10px 10px 20px;
+    width:100px;
+    /*space between the element and the margin boarder*/
+    /* padding: 20px 40px 80px 80px;  */
+    /* border:10px solid yellowgreen;
+    border-style:inset; */
+}
+.blue{
+    background-color: rgb(0, 136, 255);    
+    position: relative;
+    /* visibility:hidden; */
+    /* left:100px;
+    top: 50px;
+    height:200px; */
+}
+.green{
+    background-color:chartreuse;
+    /* width: 200px;
+    height: 5000px; */
+}
+.box{
+    width:100%;
+    height: 200px;
+    /* inline-block shows the objects next to each other */
+    display:inline-block;
+}
+#wrapper{
+    background-color: beige;
+    width: 800px;
+    /* centers whatever you have */
+    margin: 50px auto;
+    padding:10px
+}
+.flex-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap:wrap;
+}
+.comic-neue-light {
+    font-family: "Comic Neue", cursive;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .comic-neue-regular {
+    font-family: "Comic Neue", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .comic-neue-bold {
+    font-family: "Comic Neue", cursive;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .comic-neue-light-italic {
+    font-family: "Comic Neue", cursive;
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  .comic-neue-regular-italic {
+    font-family: "Comic Neue", cursive;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .comic-neue-bold-italic {
+    font-family: "Comic Neue", cursive;
+    font-weight: 700;
+    font-style: italic;
+  }
