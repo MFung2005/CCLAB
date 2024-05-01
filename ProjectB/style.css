@@ -88,13 +88,11 @@ html, body {
   
 }
 .button2{
-  /* position:relative; */
   margin: -140px 80px;
   height: 100px;
   width: 100px;
   background-color: rgb(43,43,43);
   border-radius: 50%;
-  /* margin-left: 1360px; */
   object-fit: cover;
   z-index:2
 }
@@ -106,10 +104,10 @@ html, body {
   margin-top: 80px;
   z-index: 3;
 }
+
 .gallery{
   object-fit: cover;
   width:190px;
   height:250px;
   margin: 25px;
-  
 }
