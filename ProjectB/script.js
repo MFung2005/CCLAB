@@ -5,6 +5,7 @@ let condition4 = false;//clicking the box opens  it
 let condition5 = false;//new scene; top view of box
 let condition6 = false;//placing polaroids on board
 let condition7 = false;//taking photos
+let condition8 = false;
 let imgTV;
 let imgTable;
 let photoArrayX;
@@ -24,13 +25,22 @@ let rectangles = [];
 let currentIndex = 0;
 let cameraBig = false;
 let cam;
-let camWidth = 640; // Original capture width
-let camHeight = 480; // Original capture height
-let croppedWidth = 400; // Desired cropped width
-let croppedHeight = 480; // Desired cropped height
-let cropX = (camWidth - croppedWidth) / 2; // X coordinate for cropping
-let cropY = (camHeight - croppedHeight) / 2; // Y coordinate for cropping
+let camWidth = 640;
+let camHeight = 480;
+let croppedWidth = 400;
+let croppedHeight = 480;
+let cropX = (camWidth - croppedWidth) / 2;
+let cropY = (camHeight - croppedHeight) / 2;
 let camcond = true;
+let textArray = [];
+let TVSound;
+let boxSound;
+let flip;
+let click;
+let holepunch;
+let shutter;
+let photo = false;
+let tintint = 255;
 
 
 function preload() {
@@ -51,7 +61,26 @@ function preload() {
   img8 = loadImage("photos/reducedphotos/florida 2023-2.jpg");
   img9 = loadImage("photos/reducedphotos/Hangzhou-xihu2.jpg");
   img10 = loadImage("photos/reducedphotos/shanghai-park2.jpg");
+  txt1 = loadImage("photos/text1.png");
+  txt2 = loadImage("photos/text2.png");
+  txt3 = loadImage("photos/text3.png");
+  txt4 = loadImage("photos/text4.png");
+  txt5 = loadImage("photos/text5.png");
+  txt6 = loadImage("photos/text6.png");
+  txt7 = loadImage("photos/text7.png");
+  txt8 = loadImage("photos/text8.png");
+  txt9 = loadImage("photos/text9.png");
+  txt10 = loadImage("photos/text10.png");
   imgCamera = loadImage("photosProject/camera.png")
+  clip = loadImage("photosProject/clip1.png");
+  textArray = [txt1, txt2, txt3, txt4, txt5, txt6, txt7, txt8, txt9, txt10];
+  //sounds
+  TVSound = loadSound("sound/tvSound.m4a");
+  boxSound = loadSound("sound/boxMoving.m4a");
+  flip = loadSound("sound/pageTurn.mp4");
+  click = loadSound("sound/click.m4a");
+  holepunch = loadSound("sound/holepunch.mp4");
+  shutter = loadSound("sound/shutter.m4a");
 
 }
 function setup() {
@@ -65,13 +94,15 @@ function setup() {
   imgArray = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10];
   scene = new Animation();
   cam = createCapture(VIDEO);
-  cam.size(camWidth, camHeight); // Set camera capture size
+  cam.size(camWidth, camHeight);
   cam.hide()
-
+  if (photo==true) {
+    mouseClicked();
+  }
 }
 
 function draw() {
-  
+
   background(220);
   cam.loadPixels();
   if (mouseIsPressed == true) {
@@ -91,12 +122,14 @@ function draw() {
 
   if (dim == true && tintCountDown < 155) {
     tintCountDown -= intervalDim;
+    tintint -= intervalDim;
   }
   if (tintCountDown < 0) {
     tintCountDown = 0;
   }
   if (flashlightPowerDist < 200 && mouseIsPressed && (condition5 == true || condition6 == true)) {
     tintCountDown += intervalLight;
+    tintint += intervalLight;
   }
   if (tintCountDown > 155) {
     tintCountDown = 154;
@@ -107,6 +140,9 @@ function draw() {
   }
   if (condition7 == true) {
     scene.sceneFive();
+  }
+  if (condition8 == true) {
+    scene.final();
   }
 }
 
@@ -210,7 +246,14 @@ class Animation {
     }
 
     if (this.buttondist < 50 && mouseIsPressed == true) {
+      if (TVSound.isPlaying() == false) {
+        TVSound.play();
+      } else {
+        TVSound.pause();
+      }
       this.tvOn = true;
+
+
     }
 
     if (this.tvOn) {
@@ -245,6 +288,7 @@ class Animation {
       // Check if mouse is close to closed box
       if (this.boxDist < 100 && mouseIsPressed == true) {
         this.openBox = true;
+        boxSound.play();
       }
     }
 
@@ -288,6 +332,7 @@ class Animation {
   sceneThree() {
     tint(255, tintCountDown);
     image(imgBoxOpenTop, width / 2 + 20, height / 2, 1100, 900);
+    image(clip, width / 2 - 325, height / 2 - 50, 150, 300);
     image(imgCamera, width / 2 + 200, height / 2 + 150, 250, 250);
     for (let i = 0; i < photoArrayX.length; i++) {
       noStroke();
@@ -339,6 +384,13 @@ class Animation {
 
 
       flashlightPowerDist = dist(width - 250, 150, mouseX, mouseY);
+      if (flashlightPowerDist < 200 && mouseIsPressed) {
+        if (click.isPlaying() == false) {
+          click.play();
+        } else {
+          click.pause();
+        }
+      }
 
       dim = true;
 
@@ -355,6 +407,7 @@ class Animation {
     circle(photoArrayX[photoArrayX.length - 1], photoArrayY[photoArrayY.length - 1], this.polaroidIndicator + s)
     if (this.polaroidIndicatorDist < 25 && mouseIsPressed) {
       //rectMode(CENTER);
+      flip.play();
       photoArrayX.splice(photoArrayX.length - 1, 1)
       photoArrayY.splice(photoArrayY.length - 1, 1)
       this.showRectangle = true;
@@ -381,9 +434,6 @@ class Animation {
     if (dist(mouseX, mouseY, this.flipbuttonx, this.flipbuttony) < 50 && mouseIsPressed) {
       this.descriptionBoolean = true;
     }
-    // if (this.showRectangle == false && this.showRectangle != this.showRectangle){
-    //   background(220)
-    // }
 
     if (this.showRectangle) {
       drawRect();
@@ -414,6 +464,8 @@ class Animation {
     let boardPicArrayY = [height / 4, height / 4, height / 4, height / 4, height / 4, height / 4 + 200, height / 4 + 200, height / 4 + 200, height / 4 + 200, height / 4 + 200];
     let pinSize = 15;
     let s = 0;
+   
+
     // let rectangles = [];
     // let currentIndex = 0;
     background(0);
@@ -429,6 +481,11 @@ class Animation {
     } else {
       this.flashlightsizeX = 200;
       this.flashlightsizeY = 150
+    }
+    if (this.flashlightPowerDist < 200 && mouseIsPressed) {
+      for (let i = 0; i < rectangles.length; i++) {
+        image(imgArray[i], rectangles[i], rectangles[i] + 75, 80, 100);
+      }
     }
     tintCountDown -= .1
     noTint();
@@ -450,22 +507,29 @@ class Animation {
     //   polaroidBoard(boardPicArrayX[i], boardPicArrayY[i],150,200);
     // }
     for (let i = 0; i < boardPicArrayX.length; i++) {
+      fill(tintint)
       circle(boardPicArrayX[i], boardPicArrayY[i], 25);
     }
 
     // Draw rectangles
     for (let i = 0; i < rectangles.length; i++) {
       rectMode(CENTER);
-      fill(255);
+      fill(tintint);
       rect(rectangles[i][0], rectangles[i][1] + 75, 100, 150); // Adjust size as needed
       //image(imgArray[i], boardPicArrayX[i], boardPicArrayY[i]+75, 80, 100);
       //figure out how to add photo
     }
 
+
     // Check if mouse is within range of any circle and is pressed
     for (let i = 0; i < boardPicArrayX.length; i++) {
       if (dist(boardPicArrayX[i], boardPicArrayY[i], mouseX, mouseY) < 25 && mouseIsPressed) {
         // Add a new rectangle position to the array
+        if (holepunch.isPlaying() == false) {
+          holepunch.play();
+        } else {
+          holepunch.pause();
+        }
         rectangles.push([boardPicArrayX[i], boardPicArrayY[i]]);
       }
       arrow2();
@@ -503,14 +567,47 @@ class Animation {
       circle(cameraButtonX, cameraButtonY, 30 + s1);
     }
     if (dist(mouseX, mouseY, cameraButtonX, cameraButtonY) < 50 && mouseIsPressed) {
-      cam.updatePixels();
-      fill(255);
-      rectMode(CENTER);
-      rect(width/2, height/2,475, 600);
-      imageMode(CENTER);
-      image(cam, width / 2, height / 2, croppedWidth, croppedHeight, cropX, cropY, croppedWidth, croppedHeight);
+      if (shutter.isPlaying() == false) {
+        shutter.play();
+      } else {
+        shutter.pause();
+      }
+      if (!shutter.isPlaying()) {
+        shutter.play();
+        shutter.onended(shutterFinished);  // Set the callback for when the sound ends
+      }
+      // cam.updatePixels();
+      // fill(255);
+      // rectMode(CENTER);
+      // rect(width/2, height/2,475, 600);
+      // imageMode(CENTER);
+      // image(cam, width / 2, height / 2, croppedWidth, croppedHeight, cropX, cropY, croppedWidth, croppedHeight);
     }
+    if (shutter.isPlaying()) {
+      background(255)
+    }
+  }
+  final() {
 
+    background(0);
+
+
+    cam.updatePixels();
+    fill(255);
+    rectMode(CENTER);
+    rect(width / 2, height / 2, 475, 600);
+    imageMode(CENTER);
+    image(cam, width / 2, height / 2, croppedWidth, croppedHeight, cropX, cropY, croppedWidth, croppedHeight);
+
+    if (mouseClicked && condition8 == true) {
+      photo = true;
+      // if (shutter.isPlaying() == false) {
+      //   shutter.play();
+      // } else {
+      //   shutter.pause();
+      // }
+      // saveCanvas('Polaroid', 'png');
+    }
   }
 
 }
@@ -524,7 +621,7 @@ function drawRect() {
   } else {
     textSize(15);
     fill(0);
-    text('hi', width / 2 - 300, height / 2);
+
   }
 }
 function drawRect2() {
@@ -532,7 +629,7 @@ function drawRect2() {
   rect(width / 2 - 300, height / 2, 400, 600);
   textSize(15);
   fill(0);
-  text('hi', width / 2 - 300, height / 2);
+  image(textArray[index], width / 2 - 300, height / 2 - 50, 350, 450)
 }
 function arrow2() {
   fill(255);
@@ -543,5 +640,22 @@ function arrow2() {
 function mousePressed() {
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
     cameraBig = true; // Set cameraBig to true
+  }
+}
+function shutterFinished() {
+  condition7 = false;
+  condition8 = true;
+}
+
+function mouseClicked() {
+  if (condition8) {
+    if (!shutter.isPlaying()) {
+      shutter.play();
+      shutter.onended(() => {
+        saveCanvas('Polaroid', 'png');
+      });
+    } else {
+      shutter.pause();
+    }
   }
 }
